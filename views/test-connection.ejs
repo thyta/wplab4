@@ -5,12 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+    <script>
+        $(document).ready(function () {
+            // Submit form using AJAX
+            $('#testForm').submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get form data
+                var formData = $(this).serialize();
+
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/controller/test-connection',
+                    data: formData,
+                    success: function (data) {
+                        $('#message').text(data); // Update message on success
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
     <div>
         <h2>Enter Website Information</h2>
-        <form action="/controller/test-connection" method="post">
+        <form id="testForm" method="post"> <!-- Add id to the form -->
             <label for="httpLink">HTTP Link:</label>
             <input type="text" id="httpLink" name="httpLink" required><br><br>
             <label for="key">Key:</label>
@@ -19,6 +41,7 @@
             <input type="text" id="secretKey" name="secretKey" required><br><br>
             <button type="submit">Submit</button>
         </form>
+        <div id="message"></div> <!-- Display message here -->
     </div>
 </body>
 
