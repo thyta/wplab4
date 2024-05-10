@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieve Product</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery -->
+    <script>
+        $(document).ready(function () {
+            // Submit form using AJAX
+            $('#retrieveProduct').submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get form data
+                var formData = $(this).serialize();
+
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/controller/retrieve-product',
+                    data: formData,
+                    success: function (data) {
+                        // Parse the JSON data received from the server
+                        var product = JSON.parse(data);
+
+                        // Display product information
+                        $('#productIdDisplay').text('Product ID: ' + product.id);
+                        $('#productName').text('Product Name: ' + product.name);
+                        $('#productPrice').text('Price: ' + product.price);
+                        $('#productDescription').html('Description: ' + product.description);
+                        $('#productImage').attr('src', product.images[0].src);
+
+                        // You can display more information as needed
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors here
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <h2>Retrieve Product</h2>
+        <form id="retrieveProduct" method="post">
+            <!-- Add id to the form -->
+            <label for="httpLink">HTTP Link:</label>
+            <input type="text" id="httpLink" name="httpLink" required><br><br>
+            <label for="key">Key:</label>
+            <input type="text" id="key" name="key" required><br><br>
+            <label for="secretKey">Secret Key:</label>
+            <input type="text" id="secretKey" name="secretKey" required><br><br>
+            <label for="productId">Product Id:</label>
+            <input type="text" id="productId" name="productId" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="message">
+            <!-- Display product information here -->
+            <p id="productIdDisplay"></p>
+            <p id="productName"></p>
+            <p id="productPrice"></p>
+            <p id="productDescription"></p>
+            <img id="productImage" src="" alt="Product Image">
+        </div>
+    </div>
+</body>
+
+</html>

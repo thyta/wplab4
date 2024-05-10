@@ -16,10 +16,11 @@ const WooCommerce = new WooCommerceAPI({
 // ID of the product you want to delete
 const productId = 58;
 
-WooCommerce.delete(`products/${productId}`, function (err, data, res) {
+WooCommerce.delete(`products/${productId}`, function (err, data, response) {
     if (err) {
         console.log(err);
         return;
     }
-    console.log('Product deleted:', JSON.parse(res));
+    console.log('Product deleted:', JSON.parse(response));
+    res.send(response);
 });

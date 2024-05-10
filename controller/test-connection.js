@@ -21,11 +21,17 @@ router.post('/test-connection', (req, res) => {
     WooCommerce.get('products', function (err, data, response) {
         if (err) {
             console.log('>>> Error:', err);
-            res.json({ success: false, message: 'Connection failed!' });
-        } else {
-            console.log('Connection successful!');
-            // console.log('Response Data:', data);
-            res.json({ success: true, message: 'Connection tested successfully!' });
+            res.send('Connection failed!');
+        }
+        else {
+            const responseData = JSON.parse(response);
+            if (responseData.message) {
+                console.log('Connection successful!', responseData);
+                console.log('Message:', responseData.message);
+                res.send(responseData.message);
+            } else {
+                res.send("Connection Succesful");
+            }
         }
     });
 

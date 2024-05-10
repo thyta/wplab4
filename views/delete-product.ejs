@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Product</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery -->
+    <script>
+        $(document).ready(function () {
+            // Submit form using AJAX
+            $('#deleteProduct').submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get form data
+                var formData = $(this).serialize();
+
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/controller/delete-connection',
+                    data: formData,
+                    success: function (data) {
+                        $('#message').text(data); // Update message on success
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <h2>Delete Product</h2>
+        <form id="DeleteProduct" method="post">
+            <!-- Add id to the form -->
+            <label for="httpLink">HTTP Link:</label>
+            <input type="text" id="httpLink" name="httpLink" required><br><br>
+            <label for="key">Key:</label>
+            <input type="text" id="key" name="key" required><br><br>
+            <label for="secretKey">Secret Key:</label>
+            <input type="text" id="secretKey" name="secretKey" required><br><br>
+            <label for="productId">Product Id:</label>
+            <input type="text" id="productId" name="productId" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="message"></div>
+    </div>
+</body>
+
+</html>

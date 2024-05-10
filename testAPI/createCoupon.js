@@ -2,7 +2,7 @@ const WooCommerceAPI = require('woocommerce-api');
 
 // Enter your WooCommerce API credentials and the URL of your store
 const consumerKey = 'ck_49566c7031d10d1362d482c3e5b8c511c0966208';
-const consumerSecret = "cs_6b35259784e4dcafd7da12deb0b0d725058d5c14";
+const consumerSecret = "cssdfaf_6b35259784e4dcafd7da12deb0b0d725058d5c14";
 const storeUrl = 'http://localhost/wordpress';
 
 const WooCommerce = new WooCommerceAPI({
@@ -29,5 +29,7 @@ WooCommerce.post('coupons', couponData, function (err, data, res) {
         console.log(err);
         return;
     }
-    console.log('Coupon generated:', JSON.parse(res));
+    const responseData = JSON.parse(res);
+    console.log('Coupon generated:', responseData);
+    console.log('Message:', responseData.message);
 });

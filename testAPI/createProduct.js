@@ -3,7 +3,7 @@ const WooCommerceAPI = require('woocommerce-api');
 // Enter your WooCommerce API credentials and the URL of your store
 const consumerKey = 'ck_49566c7031d10d1362d482c3e5b8c511c0966208';
 const consumerSecret = "cs_6b35259784e4dcafd7da12deb0b0d725058d5c14";
-const storeUrl = 'http://localhost/wordpress';
+const storeUrl = 'aaahttp://localhost/wordpress';
 
 const WooCommerce = new WooCommerceAPI({
     url: storeUrl,
@@ -33,7 +33,7 @@ const productData = {
 
 WooCommerce.post('products', productData, function (err, data, res) {
     if (err) {
-        console.log(err);
+        console.log('>>>>error: ', err);
         return;
     }
     console.log('New product added:', JSON.parse(res));

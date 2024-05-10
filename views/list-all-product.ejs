@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <!-- Include Normalize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <!-- Include Skeleton CSS -->
+    <style>
+        body {
+            padding-top: 40px;
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Product List</h2>
+        <form id="testForm" method="post">
+            <div class="row">
+                <div class="six columns offset-by-three">
+                    <label for="httpLink">HTTP Link:</label>
+                    <input class="u-full-width" type="text" id="httpLink" name="httpLink" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns offset-by-three">
+                    <label for="key">Key:</label>
+                    <input class="u-full-width" type="text" id="key" name="key" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns offset-by-three">
+                    <label for="secretKey">Secret Key:</label>
+                    <input class="u-full-width" type="text" id="secretKey" name="secretKey" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns offset-by-three">
+                    <button class="button-primary" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+        <div id="products"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#testForm').submit(function (event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/controller/list-all-product',
+                    data: formData,
+                    success: function (data) {
+                        var productList = '<table>';
+                        productList += '<thead><tr><th>ID</th><th>Name</th><th>Actions</th></tr></thead>';
+                        productList += '<tbody>';
+
+                        data.forEach(function (product) {
+                            productList += '<tr><td>' + product.id + '</td><td>' + product.name + '</td><td>'
+                                + '<a class="btn btn-warning" href="/retrive-product?id=' + product.id + '">Retrive Product!</a>'
+                                + '</td></tr>';
+                        });
+
+                        productList += '</tbody></table>';
+
+                        $('#products').html(productList);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

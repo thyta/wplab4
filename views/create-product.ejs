@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+    <script>
+        $(document).ready(function () {
+            // Submit form using AJAX
+            $('#create-product').submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get form data
+                var formData = $(this).serialize();
+
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/controller/create-product',
+                    data: formData,
+                    success: function (data) {
+                        $('#message').text(data); // Update message on success
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <h2>Enter Website Information</h2>
+        <form id="create-product" method="post"> <!-- Add id to the form -->
+            <label for="httpLink">HTTP Link:</label>
+            <input type="text" id="httpLink" name="httpLink" required><br><br>
+            <label for="key">Key:</label>
+            <input type="text" id="key" name="key" required><br><br>
+            <label for="secretKey">Secret Key:</label>
+            <input type="text" id="secretKey" name="secretKey" required><br><br>
+            <hr>
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" name="productName" required><br><br>
+            <label for="productRegularPrice">Product Regular Price:</label>
+            <input type="text" id="productRegularPrice" name="productRegularPrice" required><br><br>
+            <label for="productDescription">Product Description</label>
+            <input type="text" id="productDescription" name="productDescription" required><br><br>
+            <label for="productCategoryId">Product Category Id</label>
+            <input type="text" id="productCategoryId" name="productCategoryId" required><br><br>
+            <label for="ProductImagesSrc">Product Product Images Src</label>
+            <input type="text" id="ProductImagesSrc" name="ProductImagesSrc" required><br><br>
+            <label for="producStockQuantity">Product Stock Quantity</label>
+            <input type="text" id="producStockQuantity" name="producStockQuantity" required><br><br>
+            <hr>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="message"></div> <!-- Display message here -->
+    </div>
+</body>
+
+</html>
